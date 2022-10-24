@@ -13,7 +13,6 @@ class GroceryAdapter(
 ) :
     RecyclerView.Adapter<GroceryAdapter.ViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -43,7 +42,6 @@ class GroceryAdapter(
         notifyItemRangeChanged(0, data.size)
     }
 
-
     class ViewHolder(private val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(grocery: Grocery, itemClickListener: OnItemClickListener, position: Int) {
@@ -54,11 +52,9 @@ class GroceryAdapter(
             }
         }
 
-
     }
 
     interface OnItemClickListener {
         fun onItemClick(socketData: Grocery, circleView: ImageView)
     }
-
 }

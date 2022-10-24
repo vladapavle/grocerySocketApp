@@ -1,6 +1,8 @@
-package com.emasara.groceryapp.model
+package com.emasara.groceryapp.model.local
 
 import androidx.lifecycle.MutableLiveData
+import com.emasara.groceryapp.model.BaseRepository
+import com.emasara.groceryapp.model.Grocery
 import com.google.gson.Gson
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
@@ -14,8 +16,10 @@ import kotlin.coroutines.CoroutineContext
 
 class GroceryRepository : BaseRepository<Grocery>, CoroutineScope {
     private val IP = "wss://superdo-groceries.herokuapp.com/receive"
+
     private var job: Job = Job()
     private lateinit var client: HttpClient
+    private var connectionStatus = MutableLiveData(false)
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
@@ -37,12 +41,14 @@ class GroceryRepository : BaseRepository<Grocery>, CoroutineScope {
     }
 
     override fun connectToChanel() {
+        connectionStatus.postValue(true)
         launch {
             createClient()
         }
     }
 
     override fun disconnectFromChanel() {
+        connectionStatus.postValue(false)
         client.close()
     }
 
@@ -56,8 +62,8 @@ class GroceryRepository : BaseRepository<Grocery>, CoroutineScope {
             try {
                 for (frame in incoming) {
                     frame as? Frame.Text ?: continue
-                    saveData(Gson().fromJson(frame.readText(), Grocery::class.java))
-                    println(frame.readText())
+                    if (connectionStatus.value == true)
+                        saveData(Gson().fromJson(frame.readText(), Grocery::class.java))
                 }
             } catch (e: Exception) {
                 client.close()

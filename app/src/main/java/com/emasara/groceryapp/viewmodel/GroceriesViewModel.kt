@@ -5,16 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.emasara.groceryapp.model.BaseRepository
 import com.emasara.groceryapp.model.Grocery
-import com.emasara.groceryapp.model.GroceryRepository
+import com.emasara.groceryapp.model.local.GroceryRepository
 
 class GroceriesViewModel(private val repository: BaseRepository<Grocery> = GroceryRepository()) :
     ViewModel() {
 
-
     private val connectionStatus = MutableLiveData(false)
     private val allGroceriesLiveData = repository.getAllData()
     val selectedItem = MutableLiveData<SelectedItem>()
-
 
     fun getAllGroceriesLiveData() = allGroceriesLiveData
 

@@ -1,7 +1,6 @@
 package com.emasara.groceryapp.view
 
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +12,13 @@ import kotlinx.android.synthetic.main.fragment_item.*
 
 class ItemFragment : Fragment() {
     companion object {
+        private const val COLOR = "color"
+        private const val TRANSITION_NAME = "transitionName"
+
         fun newInstance(color: String, transactionName: String): ItemFragment {
             val args = Bundle()
-            args.putString("color", color)
-            args.putString("transitionName", transactionName)
+            args.putString(COLOR, color)
+            args.putString(TRANSITION_NAME, transactionName)
             val fragment = ItemFragment()
             fragment.arguments = args
             return fragment
@@ -30,8 +32,8 @@ class ItemFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            color = requireArguments().getString("color", "")
-            transactionName = requireArguments().getString("transitionName", "")
+            color = requireArguments().getString(COLOR, "")
+            transactionName = requireArguments().getString(TRANSITION_NAME, "")
         }
     }
 
@@ -47,14 +49,5 @@ class ItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_item, container, false)
-
     }
-
-    private fun drawRectangle(backgroundColor: String): GradientDrawable? {
-        val shape = GradientDrawable()
-        shape.shape = GradientDrawable.RECTANGLE
-        shape.setColor(Color.parseColor(backgroundColor))
-        return shape
-    }
-
 }

@@ -20,7 +20,6 @@ class ListFragment :
 
     private val adapter = GroceryAdapter(mutableListOf(), this)
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         allGroceriesViewModel =
@@ -30,7 +29,6 @@ class ListFragment :
             allGroceriesViewModel.changeConnectionStatus()
         }
         setupObservers()
-
     }
 
     private fun setupObservers() {
