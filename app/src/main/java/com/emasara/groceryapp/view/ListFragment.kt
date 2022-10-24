@@ -23,7 +23,7 @@ class ListFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         allGroceriesViewModel =
-            ViewModelProvider(requireActivity()).get(GroceriesViewModel::class.java)
+            ViewModelProvider(requireActivity())[GroceriesViewModel::class.java]
         groceryView.adapter = adapter
         connectButton.setOnClickListener {
             allGroceriesViewModel.changeConnectionStatus()
@@ -33,22 +33,22 @@ class ListFragment :
 
     private fun setupObservers() {
         allGroceriesViewModel.getConnectionStatus()
-            .observe(viewLifecycleOwner, Observer { connectionStatus ->
+            .observe(viewLifecycleOwner) { connectionStatus ->
                 connectButton.text =
                     getString(if (connectionStatus) R.string.disconnect else R.string.connect)
                 if (!connectionStatus) {
                     adapter.orderData()
                 }
-            })
+            }
         allGroceriesViewModel.getAllGroceriesLiveData()
-            .observe(viewLifecycleOwner, Observer { groceries ->
+            .observe(viewLifecycleOwner) { groceries ->
                 groceries?.let {
                     adapter.updateData(groceries)
                     if (groceries.isNotEmpty()) {
                         groceryView.scrollToPosition(0)
                     }
                 }
-            })
+            }
     }
 
     override fun onCreateView(
