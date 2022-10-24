@@ -24,6 +24,8 @@
             android:id="@+id/circleView"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:circleImage="@{model.bagColor}"
+            android:transitionName="@{transitionName}"
             android:layout_margin="@dimen/smallPadding" />
 
         <androidx.cardview.widget.CardView
@@ -41,6 +43,7 @@
                     android:id="@+id/nameView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{model.name}"
                     android:background="@color/cardview_shadow_start_color"
                     android:padding="@dimen/smallPadding" />
 
@@ -48,6 +51,7 @@
                     android:id="@+id/weightView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{model.weight}"
                     android:padding="@dimen/smallPadding" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
